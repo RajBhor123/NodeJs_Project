@@ -2,10 +2,10 @@ const User = require('../models/User');
 const { validateUser, validateUpdateUser } = require('../utils/validation');
 
 class UserController {
-    // Create a new user
+    
     static async createUser(req, res) {
         try {
-            // Validate input
+            
             const { error, value } = validateUser(req.body);
             if (error) {
                 return res.status(400).json({
@@ -15,7 +15,7 @@ class UserController {
                 });
             }
 
-            // Check if email already exists
+            
             const existingUser = await User.findByEmail(value.email);
             if (existingUser) {
                 return res.status(409).json({
@@ -24,7 +24,7 @@ class UserController {
                 });
             }
 
-            // Create user
+            
             const newUser = await User.create(value);
             
             res.status(201).json({
@@ -42,7 +42,7 @@ class UserController {
         }
     }
 
-    // Get all users
+    
     static async getAllUsers(req, res) {
         try {
             const users = await User.findAll();
@@ -63,12 +63,12 @@ class UserController {
         }
     }
 
-    // Get user by ID
+    
     static async getUserById(req, res) {
         try {
             const { id } = req.params;
             
-            // Validate ID
+            
             if (!id || isNaN(parseInt(id))) {
                 return res.status(400).json({
                     success: false,
@@ -100,12 +100,12 @@ class UserController {
         }
     }
 
-    // Update user by ID
+    
     static async updateUser(req, res) {
         try {
             const { id } = req.params;
             
-            // Validate ID
+            
             if (!id || isNaN(parseInt(id))) {
                 return res.status(400).json({
                     success: false,
@@ -113,7 +113,7 @@ class UserController {
                 });
             }
 
-            // Validate input
+            
             const { error, value } = validateUpdateUser(req.body);
             if (error) {
                 return res.status(400).json({
@@ -123,7 +123,7 @@ class UserController {
                 });
             }
 
-            // Check if user exists
+            
             const existingUser = await User.findById(parseInt(id));
             if (!existingUser) {
                 return res.status(404).json({
@@ -132,7 +132,7 @@ class UserController {
                 });
             }
 
-            // Check if email is being changed and if new email already exists
+            
             if (value.email && value.email !== existingUser.email) {
                 const emailExists = await User.findByEmail(value.email);
                 if (emailExists) {
@@ -143,7 +143,7 @@ class UserController {
                 }
             }
 
-            // Update user
+            
             const updatedUser = await User.update(parseInt(id), value);
             
             res.status(200).json({
@@ -161,12 +161,12 @@ class UserController {
         }
     }
 
-    // Delete user by ID
+    
     static async deleteUser(req, res) {
         try {
             const { id } = req.params;
             
-            // Validate ID
+            
             if (!id || isNaN(parseInt(id))) {
                 return res.status(400).json({
                     success: false,
@@ -174,7 +174,7 @@ class UserController {
                 });
             }
 
-            // Check if user exists
+           
             const existingUser = await User.findById(parseInt(id));
             if (!existingUser) {
                 return res.status(404).json({
@@ -183,7 +183,7 @@ class UserController {
                 });
             }
 
-            // Delete user
+            
             const deletedUser = await User.delete(parseInt(id));
             
             res.status(200).json({

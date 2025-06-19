@@ -1,7 +1,7 @@
 const errorHandler = (err, req, res, next) => {
     console.error('Error stack:', err.stack);
 
-    // MSSQL specific errors
+    
     if (err.code) {
         switch (err.code) {
             case 'EREQUEST':
@@ -29,7 +29,7 @@ const errorHandler = (err, req, res, next) => {
         }
     }
 
-    // Default error
+    
     res.status(500).json({
         success: false,
         message: 'Internal server error',

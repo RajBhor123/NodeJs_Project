@@ -37,12 +37,12 @@ const getPool = () => {
     return poolPromise;
 };
 
-// Initialize database and create table if it doesn't exist
+
 const initializeDatabase = async () => {
     try {
         const pool = await getPool();
         
-        // Create Users table if it doesn't exist
+        
         const createTableQuery = `
             IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Users' AND xtype='U')
             CREATE TABLE Users (
